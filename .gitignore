@@ -1,0 +1,10 @@
+# Compiled Binaries
+*.exe
+*.o
+*.obj
+
+# Profiling and Debug outputs
+gmon.out
+*.txt
+*.log
+.vscode/
