@@ -781,39 +781,25 @@ static void run_stress_test(std::size_t num_sources, std::size_t num_destination
 
 
 int main() {
-    std::cout << colour::BOLD
-              << "\n OptimizationEngine - Test & Validation Suite\n"
-              << "   Build: " << __DATE__ << " " << __TIME__ << "\n"
-              << "   C++ standard: "
-#if __cplusplus >= 202002L
-              << "C++20\n"
-#elif __cplusplus >= 201703L
-              << "C++17\n"
-#else
-              << "< C++17 (unsupported)\n"
-#endif
-              << colour::RESET;
+    // Change this to true to run validation suite, false to run benchmarks
+    bool run_validation_suite = true; 
 
-    // --- TEMPORARILY COMMENT OUT THE VALIDATION SUITE ---
-    // test_t1_production_mix();
-    // test_t2_mixed_constraints();
-    // test_t3_unbounded();
-    // test_t4_infeasible();
-    // test_t5_warm_restart();
-    // test_t6_transportation_classic();
-    // test_t7_unbalanced_transport();
-    // test_t8_matrix_primitives();
-    // print_summary();
+    if (run_validation_suite) {
+        test_t1_production_mix();
+        test_t2_mixed_constraints();
+        test_t3_unbounded();
+        test_t4_infeasible();
+        test_t5_warm_restart();
+        test_t6_transportation_classic();
+        test_t7_unbalanced_transport();
+        test_t8_matrix_primitives();
+        print_summary();
+    } else {
+        // Run your high-performance benchmarks
+        run_stress_test(100, 100);   // 10k cells
+        run_stress_test(500, 500);   // 250k cells
+        run_stress_test(1000, 1000); // 1M cells
+    }
 
-    // --- ADD THE STRESS TESTS HERE ---
-    run_stress_test(100, 100);   // 10,000 cells
-    run_stress_test(500, 500);   // 250,000 cells
-    run_stress_test(1000, 1000); // 1,000,000 cells
-    std::cout << "\n--- OFFICIAL BENCHMARK RUNS ---\n";
- //   for (int i = 0; i < 5; ++i) {
-   //     run_stress_test(1000, 1000);
-    //}
-
-    // Return 0 since we aren't using the g_tests_passed counter right now
-    return 0; 
+    return 0;
 }
